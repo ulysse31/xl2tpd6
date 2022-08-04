@@ -2,59 +2,20 @@
 
 This is a fork of the official xl2tpd source (v1.3.17) with modified source
 and setups to generate xl2tpd6: an IPv6 L2TP server, allowing IPv4 inside
-IPv6 tunneling.
+IPv6 tunneling. This versions have kernel support for kernel L2TP.
 
+## STATUS:
+For now, server builds and seems fully functional, but listen-addr is NOT
+taken into account in the configuration, it will listen on :: (any IPV6 address)
 
+Scripts for package generation are not yet functional, simply compile it,
+it will generate an xl2tpd6 binary, that you can copy manually to same
+binary path as your legacy xl2tpd.
 
+For the configuration, it will by default try to read /etc/xl2tpd/xl2tpd6.conf
 
+For the Startup, you will have inside debian/xl2tpd6.init a rc.init file that works
 
+For course, this binary can run aside of the legacy xl2tpd binary
+(one listening in IPv4, the other in IPv6).
 
-
-
-
-
-# LEGACY HEADER
-
-xl2tpd is a **FREE** implementation of the Layer 2 Tunneling Protocol
-as defined by [RFC 2661](https://tools.ietf.org/rfc/rfc2661.txt).
-L2TP allows you to tunnel PPP over UDP. Some ISPs use L2TP to tunnel user
-sessions from dial-in servers (modem banks, ADSL DSLAMs) to back-end PPP
-servers. Another important application is Virtual Private Networks where
-the IPsec protocol is used to secure the L2TP connection (L2TP/IPsec is
-defined by [RFC 3193](https://tools.ietf.org/rfc/rfc3193.txt). xl2tpd can
-be used in combination with IPsec implementations such as Openswan. Example
-configuration files for such a setup are included in the examples directory.
-
-xl2tpd uses a pseudo-tty to communicate with pppd.
-It runs in userspace but supports kernel mode L2TP.
-
-xl2tpd supports IPsec SA Reference tracking to enable overlapping internal
-NAT'ed IP's by different clients (eg all clients connecting from their
-linksys internal IP 192.168.1.101) as well as multiple clients behind
-the same NAT router.
-
-Xl2tpd is based on the L2TP code base of Jeff McAdams <jeffm@iglou.com>.
-It was de-facto maintained by Jacco de Leeuw <jacco2@dds.nl> in 2002 and 2003.
-
-NOTE: In Linux kernel 4.15+ there is a kernel bug with ancillary IP_PKTINFO.
-      As such, for Linux kernel 4.15+ we recommend the community use xl2tpd
-      1.3.12+
-
-## Build and install
-    make
-    sudo make install
-
-The xl2tpd.conf(5) man page has details on how to configure xl2tpd.
-
-
-## Mailing Lists
-
-https://lists.openswan.org/cgi-bin/mailman/listinfo/xl2tpd
-is home of the mailing list.
-
-Note: This is a closed list - you **must** be subscribed to be able
-to post mails.
-
-## Security Vulnerability
-
-Security vulnerabilities can be e-mailed to: security@xelerance.com
