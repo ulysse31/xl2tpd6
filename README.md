@@ -4,14 +4,14 @@ This is a fork from xl2tpd official github, and convert server to an IPV6 server
 This version includes kernel support using IPV6_PKTINFO
 
 
-# LEGACY HEADER
+# LEGACY HEADER (with adapted text)
 xl2tpd6 is a **FREE** implementation of the Layer 2 Tunneling Protocol
 as defined by [RFC 2661](https://tools.ietf.org/rfc/rfc2661.txt).
 L2TP allows you to tunnel PPP over UDP. Some ISPs use L2TP to tunnel user
 sessions from dial-in servers (modem banks, ADSL DSLAMs) to back-end PPP
 servers. Another important application is Virtual Private Networks where
 the IPsec protocol is used to secure the L2TP connection (L2TP/IPsec is
-defined by [RFC 3193](https://tools.ietf.org/rfc/rfc3193.txt). xl2tpd can
+defined by [RFC 3193](https://tools.ietf.org/rfc/rfc3193.txt). xl2tpd6 can
 be used in combination with IPsec implementations such as Openswan. Example
 configuration files for such a setup are included in the examples directory.
 
@@ -34,7 +34,7 @@ NOTE: In Linux kernel 4.15+ there is a kernel bug with ancillary IP_PKTINFO.
     make
     sudo make install
 
-The xl2tpd6.conf(5) man page has details on how to configure xl2tpd.
+The xl2tpd6.conf(5) man page has details on how to configure xl2tpd6.
 
 
 ## Mailing Lists
