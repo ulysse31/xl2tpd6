@@ -16,6 +16,6 @@ For the configuration, it will by default try to read /etc/xl2tpd/xl2tpd6.conf
 
 For the Startup, you will have inside debian/xl2tpd6.init a rc.init file that works
 
-For course, this binary can run aside of the legacy xl2tpd binary
+Of course, this binary can run aside of the legacy xl2tpd binary
 (one listening in IPv4, the other in IPv6).
 
