@@ -23,8 +23,10 @@ typedef unsigned long long _u64;
                                 /* FIXME: MAX_RECV_SIZE, what is it? */
 #define MAX_RECV_SIZE 4096      /* Biggest packet we'll accept */
 
+
 #include <netinet/in.h>
 #include <termios.h>
+
 #ifdef OPENBSD
 # include <util.h>
 #endif
@@ -162,7 +164,7 @@ struct tunnel
     unsigned int addr;          /* Remote address */
     unsigned short port;        /* Port on remote end */
 #else
-    struct sockaddr_in peer;    /* Peer's Address */
+    struct sockaddr_in6 peer;    /* Peer's Address */
 #endif
     int debug;                  /* Are we debugging or not? */
     int nego;                   /* Show Negotiation? */
@@ -183,7 +185,7 @@ struct tunnel
     struct call *self;
     struct lns *lns;            /* LNS that owns us */
     struct lac *lac;            /* LAC that owns us */
-    struct in_pktinfo my_addr;  /* Address of my endpoint */
+    struct in6_pktinfo my_addr;  /* Address of my endpoint */
     char hostname[MAXSTRLEN];   /* Remote hostname */
     char vendor[MAXSTRLEN];     /* Vendor of remote product */
     struct challenge chal_us;   /* Their Challenge to us */
@@ -229,8 +231,8 @@ extern int server_socket;
 extern struct tunnel *new_tunnel ();
 extern struct packet_queue xmit_udp;
 extern void destroy_tunnel (struct tunnel *);
-extern struct buffer *new_payload (struct sockaddr_in);
-extern void recycle_payload (struct buffer *, struct sockaddr_in);
+extern struct buffer *new_payload (struct sockaddr_in6);
+extern void recycle_payload (struct buffer *, struct sockaddr_in6);
 extern void add_payload_hdr (struct tunnel *, struct call *, struct buffer *);
 extern int read_packet (struct call *);
 extern void udp_xmit (struct buffer *buf, struct tunnel *t);

@@ -13,6 +13,13 @@
  *
  */
 
+#define _ISOC99_SOURCE
+#define _XOPEN_SOURCE
+#define _BSD_SOURCE
+#define _DEFAULT_SOURCE
+#define _XOPEN_SOURCE_EXTENDED  1
+#define _GNU_SOURCE
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <netinet/in.h>
@@ -301,13 +308,15 @@ struct lns *get_lns (struct tunnel *t)
      * find a reasonable LNS for this call
      * if one is available
      */
-    struct lns *lns;
-    struct iprange *ipr;
-    int allow, checkdefault = 0;
-    /* If access control is disabled, we give the default
-       otherwise, we give nothing */
-    allow = 0;
-    lns = lnslist;
+  struct lns *lns;
+  struct iprange *ipr;
+  int allow, checkdefault = 0;
+  /* If access control is disabled, we give the default
+     otherwise, we give nothing */
+  if (t)
+    t = t;
+  allow = 0;
+  lns = lnslist;
     if (!lns)
     {
         lns = deflns;
@@ -318,14 +327,14 @@ struct lns *get_lns (struct tunnel *t)
         ipr = lns->lacs;
         while (ipr)
         {
-            if ((ntohl (t->peer.sin_addr.s_addr) >= ntohl (ipr->start)) &&
-                (ntohl (t->peer.sin_addr.s_addr) <= ntohl (ipr->end)))
+	  // if ((ntohl (t->peer.sin6_addr.s_addr) >= ntohl (ipr->start)) &&
+          //      (ntohl (t->peer.sin6_addr.s_addr) <= ntohl (ipr->end)))
             {
 #ifdef DEBUG_AAA
                 l2tp_log (LOG_DEBUG,
                      "$s: Rule %s to %s, sense %s matched %s\n", __FUNCTION__,
                      IPADDY (ipr->start), IPADDY (ipr->end),
-                     (ipr->sense ? "allow" : "deny"), IPADDY (t->peer.sin_addr.s_addr));
+                     (ipr->sense ? "allow" : "deny"), IPADDY6 (t->peer.sin6_addr.s6_addr));
 #endif
                 allow = ipr->sense;
             }

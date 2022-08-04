@@ -1,4 +1,4 @@
-Source: xl2tpd
+Source: xl2tpd6
 Section: net
 Priority: optional
 Maintainer: Samir Hussain <shussain@xelerance.com>
@@ -9,7 +9,7 @@ Vcs-Git: https://github.com/xelerance/xl2tpd.git -b debian-sid
 Build-Depends: debhelper-compat (= 12), libpcap0.8-dev
 Standards-Version: 4.6.0
 
-Package: xl2tpd
+Package: xl2tpd6
 Architecture: any
 Provides: l2tpd
 Depends: ${shlibs:Depends}, ${misc:Depends}, ppp, lsb-base (>= 3.0-6)

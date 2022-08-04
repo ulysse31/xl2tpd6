@@ -12,6 +12,13 @@
  * Handle a call as a separate thread
  */
 
+#define _ISOC99_SOURCE
+#define _XOPEN_SOURCE
+#define _BSD_SOURCE
+#define _DEFAULT_SOURCE
+#define _XOPEN_SOURCE_EXTENDED  1
+#define _GNU_SOURCE
+
 #include <stdio.h>
 #include <fcntl.h>
 #include <sys/socket.h>
@@ -28,7 +35,7 @@
 
 #include "ipsecmast.h"
 
-struct buffer *new_payload (struct sockaddr_in peer)
+struct buffer *new_payload (struct sockaddr_in6 peer)
 {
     struct buffer *tmp = new_buf (MAX_RECV_SIZE);
     if (!tmp)
@@ -39,7 +46,7 @@ struct buffer *new_payload (struct sockaddr_in peer)
     return tmp;
 }
 
-inline void recycle_payload (struct buffer *buf, struct sockaddr_in peer)
+inline void recycle_payload (struct buffer *buf, struct sockaddr_in6 peer)
 {
     buf->start = buf->rstart + sizeof (struct payload_hdr);
     buf->len = 0;
@@ -319,8 +326,8 @@ void call_close (struct call *c)
         l2tp_log (LOG_INFO,
              "Connection %d closed to %s, port %d (%s)\n",
              c->container->tid,
-             IPADDY (c->container->peer.sin_addr),
-             ntohs (c->container->peer.sin_port), c->errormsg);
+             IPADDY6 (c->container->peer.sin6_addr),
+             ntohs (c->container->peer.sin6_port), c->errormsg);
     }
     else
     {
@@ -368,7 +375,7 @@ void call_close (struct call *c)
 #endif
         control_xmit (buf);
         l2tp_log (LOG_INFO, "%s: Call %d to %s disconnected\n", __FUNCTION__,
-             c->ourcid, IPADDY (c->container->peer.sin_addr));
+             c->ourcid, IPADDY6 (c->container->peer.sin6_addr));
     }
     /*
      * Note that we're in the process of closing now
@@ -575,7 +582,7 @@ struct call *new_call (struct tunnel *parent)
     return tmp;
 }
 
-struct call *get_tunnel (int tunnel, unsigned int addr, int port)
+struct call *get_tunnel (int tunnel, struct in6_addr addr, int port)
 {
     UNUSED(addr);
     UNUSED(port);
@@ -595,7 +602,7 @@ struct call *get_tunnel (int tunnel, unsigned int addr, int port)
     return NULL;
 }
 
-struct call *get_call (int tunnel, int call,  struct in_addr addr, int port,
+struct call *get_call (int tunnel, int call,  struct in6_addr addr, int port,
 		       IPsecSAref_t refme, IPsecSAref_t refhim)
 {
     /*
@@ -662,22 +669,22 @@ struct call *get_call (int tunnel, int call,  struct in_addr addr, int port,
         {
             l2tp_log (LOG_DEBUG,
                  "%s: allocating new tunnel for host %s, port %d.\n",
-                 __FUNCTION__, IPADDY (addr), ntohs (port));
+                 __FUNCTION__, IPADDY6 (addr), ntohs (port));
         }
         if (!(st = new_tunnel ()))
         {
             l2tp_log (LOG_WARNING,
                  "%s: unable to allocate new tunnel for host %s, port %d.\n",
-                 __FUNCTION__, IPADDY (addr), ntohs (port));
+                 __FUNCTION__, IPADDY6 (addr), ntohs (port));
             return NULL;
         };
-        st->peer.sin_family = AF_INET;
-        st->peer.sin_port = port;
+        st->peer.sin6_family = AF_INET6;
+        st->peer.sin6_port = port;
 	st->refme  = refme;
 	st->refhim = refhim;
         st->udp_fd = -1;
         st->pppox_fd = -1;
-        bcopy (&addr, &st->peer.sin_addr, sizeof (addr));
+        bcopy (&addr, &st->peer.sin6_addr, sizeof (addr));
         st->next = tunnels.head;
         tunnels.head = st;
         tunnels.count++;

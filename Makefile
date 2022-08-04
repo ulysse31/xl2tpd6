@@ -106,8 +106,8 @@ OBJS=xl2tpd.o pty.o misc.o control.o avp.o call.o network.o avpsend.o scheduler.
 SRCS=${OBJS:.o=.c} ${HDRS}
 CONTROL_SRCS=xl2tpd-control.c
 #LIBS= $(OSLIBS) # -lefence # efence for malloc checking
-EXEC=xl2tpd
-CONTROL_EXEC=xl2tpd-control
+EXEC=xl2tpd6
+CONTROL_EXEC=xl2tpd6-control
 
 PREFIX?=/usr/local
 SBINDIR?=$(DESTDIR)${PREFIX}/sbin
@@ -115,10 +115,10 @@ BINDIR?=$(DESTDIR)${PREFIX}/bin
 MANDIR?=$(DESTDIR)${PREFIX}/share/man
 
 
-all: $(EXEC) pfc $(CONTROL_EXEC)
+all: $(EXEC) pfc6 $(CONTROL_EXEC)
 
 clean:
-	rm -f $(OBJS) $(EXEC) pfc.o pfc $(CONTROL_EXEC)
+	rm -f $(OBJS) $(EXEC) pfc.o pfc6 $(CONTROL_EXEC)
 
 $(EXEC): $(OBJS) $(HDRS)
 	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LDLIBS)
@@ -126,9 +126,9 @@ $(EXEC): $(OBJS) $(HDRS)
 $(CONTROL_EXEC): $(CONTROL_SRCS)
 	$(CC) $(CFLAGS) $(LDFLAGS) $(CONTROL_SRCS) -o $@
 
-pfc:
+pfc6:
 	$(CC) $(CFLAGS) -c contrib/pfc.c
-	$(CC) $(LDFLAGS) -o pfc pfc.o -lpcap $(LDLIBS)
+	$(CC) $(LDFLAGS) -o pfc6 pfc.o -lpcap $(LDLIBS)
 
 romfs:
 	$(ROMFSINST) /bin/$(EXEC)
@@ -142,20 +142,20 @@ packagingprep:
 	sed -i "s/Version: .*/Version: ${XL2TPDBASEVERSION}/" packaging/*/*.spec
 	sed -i "s/PKG_VERSION:=.*/PKG_VERSION:=${XL2TPDBASEVERSION}/" packaging/openwrt/Makefile
 
-install: ${EXEC} pfc ${CONTROL_EXEC}
+install: ${EXEC} pfc6 ${CONTROL_EXEC}
 	install -d -m 0755 ${SBINDIR}
 	install -m 0755 $(EXEC) ${SBINDIR}/$(EXEC)
 	install -d -m 0755 ${MANDIR}/man5
 	install -d -m 0755 ${MANDIR}/man8
-	install -m 0644 doc/xl2tpd.8 ${MANDIR}/man8/
-	install -m 0644 doc/xl2tpd-control.8 ${MANDIR}/man8/
-	install -m 0644 doc/xl2tpd.conf.5 doc/l2tp-secrets.5 \
+	install -m 0644 doc/xl2tpd6.8 ${MANDIR}/man8/
+	install -m 0644 doc/xl2tpd6-control.8 ${MANDIR}/man8/
+	install -m 0644 doc/xl2tpd6.conf.5 doc/l2tp6-secrets.5 \
 		 ${MANDIR}/man5/
 	# pfc
 	install -d -m 0755 ${BINDIR}
-	install -m 0755 pfc ${BINDIR}/pfc
+	install -m 0755 pfc6 ${BINDIR}/pfc6
 	install -d -m 0755 ${MANDIR}/man1
-	install -m 0644 contrib/pfc.1 ${MANDIR}/man1/
+	install -m 0644 contrib/pfc6.1 ${MANDIR}/man1/
 	# control exec
 	install -d -m 0755 ${SBINDIR}
 	install -m 0755 $(CONTROL_EXEC) ${SBINDIR}/$(CONTROL_EXEC)

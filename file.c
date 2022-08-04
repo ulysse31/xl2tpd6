@@ -13,6 +13,13 @@
  *
  */
 
+#define _ISOC99_SOURCE
+#define _XOPEN_SOURCE
+#define _BSD_SOURCE
+#define _DEFAULT_SOURCE
+#define _XOPEN_SOURCE_EXTENDED  1
+#define _GNU_SOURCE
+
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>

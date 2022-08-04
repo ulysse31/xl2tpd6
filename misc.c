@@ -13,6 +13,13 @@
  *
  */
 
+#define _ISOC99_SOURCE
+#define _XOPEN_SOURCE
+#define _BSD_SOURCE
+#define _DEFAULT_SOURCE
+#define _XOPEN_SOURCE_EXTENDED  1
+#define _GNU_SOURCE
+
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -38,6 +45,9 @@ static int syslog_nesting = 0;
     }                               \
     --syslog_nesting;               \
 } while(0)
+
+char ipaddy_buf[1024];
+socklen_t ipaddr_len = sizeof(ipaddy_buf);
 
 #define UNUSED(x) (void)(x)
 

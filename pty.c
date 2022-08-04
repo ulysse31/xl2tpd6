@@ -18,14 +18,28 @@
 #define _XOPEN_SOURCE
 #define _BSD_SOURCE
 #define _DEFAULT_SOURCE
-#define _XOPEN_SOURCE_EXTENDED
+#define _XOPEN_SOURCE_EXTENDED  1
+#define _GNU_SOURCE
 
 #include <stdlib.h>
-#include <unistd.h>
-#include <string.h>
-#include <errno.h>
+#include <sys/types.h>
+#include <sys/utsname.h>
+#include <sys/stat.h>
+#include <sys/wait.h>
 #include <stdio.h>
+#include <stdarg.h>
+#include <errno.h>
+#include <unistd.h>
+#include <time.h>
+#include <signal.h>
+#include <string.h>
 #include <fcntl.h>
+#include <netdb.h>
+#include <string.h>
+#include <strings.h>
+#include <fcntl.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
 #include "l2tp.h"
 
 
