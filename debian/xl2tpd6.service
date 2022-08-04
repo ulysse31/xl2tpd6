@@ -1,0 +1,18 @@
+[Unit]
+Description=Level 2 Tunnel Protocol Daemon (L2TP)
+After=network.target
+After=ipsec.service
+Wants=ipsec.service
+
+[Service]
+Type=simple
+Environment=XL2TPD6_RUN_DIR=/var/run/xl2tpd6
+EnvironmentFile=-/etc/default/xl2tpd6
+# Not using RuntimeDirectory since this directory may be modified in /etc/default/xl2tpd6
+ExecStartPre=-mkdir -p $XL2TPD6_RUN_DIR
+ExecStart=/usr/sbin/xl2tpd6 -D $DAEMON_OPTS
+PIDFile=/run/xl2tpd/xl2tpd6.pid
+Restart=on-abort
+
+[Install]
+WantedBy=multi-user.target

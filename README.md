@@ -1,6 +1,19 @@
-# xl2tpd
+# xl2tpd6
 
-[![Build Status](https://travis-ci.org/xelerance/xl2tpd.svg?branch=1.3.16dev)](https://travis-ci.org/xelerance/xl2tpd)
+This is a fork of the official xl2tpd source (v1.3.17) with modified source
+and setups to generate xl2tpd6: an IPv6 L2TP server, allowing IPv4 inside
+IPv6 tunneling.
+
+
+
+
+
+
+
+
+
+
+# LEGACY HEADER
 
 xl2tpd is a **FREE** implementation of the Layer 2 Tunneling Protocol
 as defined by [RFC 2661](https://tools.ietf.org/rfc/rfc2661.txt).
