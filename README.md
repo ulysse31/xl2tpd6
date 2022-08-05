@@ -2,9 +2,9 @@
 
 This is a fork of the official xl2tpd source (v1.3.17) with modified source
 and setups to generate xl2tpd6: an IPv6 L2TP server, allowing IPv4 inside
-IPv6 tunneling. This versions have kernel support for kernel L2TP.
+IPv6 tunneling. This version have kernel support for L2TP Tunneling.
 
-## STATUS:
+## Status: Working and seems stable ^^
 For now, server builds and seems fully functional, but listen-addr is NOT
 taken into account in the configuration, it will listen on :: (any IPV6 address)
 
