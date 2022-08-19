@@ -157,7 +157,7 @@ static void show_status (void)
                  " control_seq_num = %d, control_rec_seq_num = %d,"
                  " cLr = %d, call count = %d ref=%u/refhim=%u",
                  (t->lac ? t->lac->entname : (t->lns ? t->lns->entname : "")),
-                 t->ourtid, t->tid, IPADDY (t->peer.sin6_addr),
+                 t->ourtid, t->tid, IPADDY6 (t->peer.sin6_addr),
                  ntohs (t->peer.sin6_port), t->control_seq_num,
                   t->control_rec_seq_num, t->cLr, t->count,
                   t->refme, t->refhim);
@@ -881,7 +881,7 @@ static void lac_disconnect (int tid)
         {
             l2tp_log (LOG_INFO,
                  "Disconnecting from %s, Local: %d, Remote: %d\n",
-                 IPADDY (t->peer.sin6_addr), t->ourtid, t->tid);
+                 IPADDY6 (t->peer.sin6_addr), t->ourtid, t->tid);
             t->self->needclose = -1;
             strcpy (t->self->errormsg, "Goodbye!");
             call_close (t->self);
@@ -1189,7 +1189,7 @@ static int control_handle_lns_status(FILE* resf, char* bufp){
                 /* Lets provide some information on each tunnel */
                 write_res (resf, "%02i STATUS tunnels.%d.id=%d\n", 0, active_tunnel_count, t->tid);
                 write_res (resf, "%02i STATUS tunnels.%d.peer=%s:%d\n", 0, active_tunnel_count,
-                        IPADDY (t->peer.sin6_addr), ntohs (t->peer.sin6_port));
+                        IPADDY6 (t->peer.sin6_addr), ntohs (t->peer.sin6_port));
 
                 /* And some call stats */
                 struct call *c = t->call_head;
