@@ -383,7 +383,7 @@ void udp_xmit (struct buffer *buf, struct tunnel *t)
     /* Receive one packet. */
     if ((err = sendmsg(server_socket, &msgh, 0)) < 0) {
 	l2tp_log(LOG_ERR, "udp_xmit failed to %s:%d with err=%d:%s\n",
-		 IPADDY(t->peer.sin6_addr), ntohs(t->peer.sin6_port),
+		 IPADDY6(t->peer.sin6_addr), ntohs(t->peer.sin6_port),
 		 err,strerror(errno));
     }
 }
